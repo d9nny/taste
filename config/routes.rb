@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :restaurants do
     resources :reviews
   end
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root to: "restaurants#index"
 
   # Example of regular route:
-     get 'restaurants' => 'restaurants#index'
+     # get 'restaurants' => 'restaurants#index'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
