@@ -19,18 +19,28 @@ feature 'reviewing' do
   end
 
   context 'users can only delete or edit their own reviews' do
-    # context '#delete' do
-    #   scenario 'when signed in' do
-    #     sign_up("test@test.com", "password")
-    #     create_restaurant("KFC")
-    #     leave_review("KFC")
-    #     click_button("")
-    #   end
+    context '#delete' do
+      scenario 'when signed in' do
+        sign_up("test@test.com", "password")
+        create_restaurant("KFC")
+        leave_review("KFC")
+        click_link("KFC")
+        click_link("Delete Review")
+        expect(page).to have_content('Review deleted successfully')
+      end
 
-    #   scenario 'when not signed in' do
-
-    #   end
-    # end
+      scenario 'when not signed in' do
+        sign_up("test@test.com", "password")
+        create_restaurant("KFC")
+        leave_review("KFC")
+        sign_out
+        sign_up("testing@testing.com", "password")
+        visit '/'
+        click_link("KFC")
+        click_link("Delete Review")
+        expect(page).to have_content("You aren't the review creator")
+      end
+    end
 
     context '#edit' do
       scenario 'when signed in' do
@@ -40,7 +50,7 @@ feature 'reviewing' do
         visit '/'
         click_link("KFC")
         click_link("Edit Review")
-        fill_in "Toughts", with: "good"
+        fill_in "Thoughts", with: "good"
         expect(page).to have_content("good")
       end
 
@@ -53,7 +63,7 @@ feature 'reviewing' do
         visit '/'
         click_link("KFC")
         click_link("Edit Review")
-        expect(page).to have_content("You can only edit your reviews")
+        expect(page).to have_content("You aren't the review creator")
       end
     end
   end

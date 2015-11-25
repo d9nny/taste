@@ -8,6 +8,7 @@
     <% @restaurant.reviews.each do |review| %>
       <li>
       	<%= link_to "Edit Review",  edit_restaurant_review_path(@restaurant, review) %>
+        <%= link_to "Delete Review", restaurant_review_path(@restaurant, review), method: :delete %>
         <%= review.thoughts %>, <strong><%= review.rating %></strong>/5
       </li>
     <% end %>
