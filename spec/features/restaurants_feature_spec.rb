@@ -4,7 +4,7 @@ feature 'restaurants' do
 
   context 'no restaurants have been added' do
     scenario 'should display a prompt to add a restaurant' do
-      visit '/restaurants'
+      visit '/'
       expect(page).to have_content 'No restaurants yet'
       expect(page).to have_link 'Add a restaurant'
     end
@@ -15,36 +15,30 @@ feature 'restaurants' do
 	    Restaurant.create(name: 'KFC')
 	  end
 	  scenario 'display restaurants' do
-	    visit '/restaurants'
+	    visit '/'
 	    expect(page).to have_content('KFC')
 	    expect(page).not_to have_content('No restaurants yet')
 	  end
 	end
 
 	context 'creating restaurants' do
-		
-			scenario 'not signed in' do
-				visit '/restaurants'
-				click_link 'Add a restaurant'
-				expect(page).to have_content 'Log in'
-			end
 
-		  scenario 'signed in' do
-		  	sign_up
-		    visit '/restaurants'
-		    click_link 'Add a restaurant'
-	      fill_in 'Name', with: 'KFC'
-	      click_button 'Create Restaurant'
-	      expect(page).to have_css 'h2', text: 'KFC'
-		  end
+		scenario 'not signed in' do
+			visit '/'
+			click_link 'Add a restaurant'
+			expect(page).to have_content 'Log in'
+		end
+
+	  scenario 'signed in' do
+	  	sign_up('test@example.com', 'testtest')
+			create_restaurant('KFC')
+      expect(page).to have_css 'h2', text: 'KFC'
+	  end
 
 	  context 'an invalid restaurant' do
 	    it 'does not let you submit a name that is too short' do
-	      sign_up
-	      visit '/restaurants'
-	      click_link 'Add a restaurant'
-	      fill_in 'Name', with: 'kf'
-	      click_button 'Create Restaurant'
+	      sign_up('test@example.com', 'testtest')
+				create_restaurant('kf')
 	      expect(page).not_to have_css 'h2', text: 'kf'
 	      expect(page).to have_content 'error'
 	    end
@@ -56,7 +50,7 @@ feature 'restaurants' do
 	  let!(:kfc){Restaurant.create(name:'KFC')}
 
 	  scenario 'lets a user view a restaurant' do
-	    visit '/restaurants'
+	    visit '/'
 	    click_link 'KFC'
 	    expect(page).to have_content 'KFC'
 	    expect(current_path).to eq "/restaurants/#{kfc.id}"
@@ -66,35 +60,54 @@ feature 'restaurants' do
 
 	context 'editing restaurants' do
 
-	  before { Restaurant.create name: 'KFC' }
-
-	  scenario 'let a user edit a restaurant' do
-	  	sign_up
-	    visit '/restaurants'
+	  scenario 'when signed in as the creator' do
+	  	sign_up('test@example.com', 'testtest')
+	  	create_restaurant('KFC')
+	    visit '/'
 	    click_link 'Edit KFC'
 	    fill_in 'Name', with: 'Kentucky Fried Chicken'
 	    click_button 'Update Restaurant'
 	    expect(page).to have_content 'Kentucky Fried Chicken'
 	    expect(current_path).to eq '/restaurants'
 	  end
+
+	  scenario 'when not signed in as the creator' do
+	  	sign_up('test@example.com', 'testtest')
+	  	create_restaurant('KFC')
+	  	sign_out
+	  	sign_up('another@another.com', 'anotheranother')
+	  	click_link 'Edit KFC'
+	  	expect(page).to have_content "You aren't the restaurant creator"
+	  end
+
+	  scenario 'when not signed in' do
+	  	visit '/'
+	  	expect(page).not_to have_content('Edit KFC')
+	  end
 	end
 
 	context 'deleting restaurants' do
-		before do
-			sign_up 
-			Restaurant.create name: 'KFC' 
-		end
 
-		scenario 'removes a restaurant when a user clicks a delete link' do
+		scenario 'when signed in as the creator' do
+			sign_up('test@example.com', 'testtest')
+			create_restaurant('KFC');
 			visit '/restaurants'
 			click_link 'Delete KFC'
 			expect(page).not_to have_content('KFC')
 			expect(page).to have_content('Restaurant deleted successfully')
 		end
+
+		scenario 'when not signed in as the creator' do
+			sign_up('test@example.com', 'testtest')
+			create_restaurant('KFC');
+			sign_out
+			sign_up('another@another.com', 'anotheranother')
+			visit '/restaurants'
+			click_link 'Delete KFC'
+			expect(page).to have_content('KFC')
+			expect(page).to have_content("You aren't the restaurant creator")
+		end
 	end
-
-
-
 end
 
 
