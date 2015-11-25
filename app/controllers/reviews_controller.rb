@@ -10,7 +10,6 @@ class ReviewsController < ApplicationController
 	def create
 		@restaurant = Restaurant.find(params[:restaurant_id])
 		@restaurant.reviews.create(review_params)
-		p @restaurant.reviews.all
 		redirect_to restaurants_path
 	end
 
@@ -19,16 +18,13 @@ class ReviewsController < ApplicationController
 	end
 
 	def edit
-		# @restaurant = Restaurant.find(params[:restaurant_id])
-		# p @restaurant.reviews.all
+		@restaurant = Restaurant.find(params[:restaurant_id])
 		@review = Review.find(params[:id])
 	end
 
 	def update
     @review = Review.find(params[:id])
-
     @review.update(review_params)
-
     redirect_to '/restaurants'
   end
 

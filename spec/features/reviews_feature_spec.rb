@@ -9,7 +9,7 @@ feature 'reviewing' do
     expect(current_path).to eq '/restaurants'
     expect(page).to have_content('so so')
   end
-	
+
   scenario 'user can only leave one review per restaurants' do
     sign_up("test@test.com", "password")
     create_restaurant("KFC")
@@ -35,9 +35,11 @@ feature 'reviewing' do
     context '#edit' do
       scenario 'when signed in' do
         sign_up("test@test.com", "password")
-    #     create_restaurant("KFC")
-    #     leave_review("KFC")
-    #     click_button("")
+        create_restaurant("KFC")
+        leave_review("KFC")
+        visit '/'
+        click_link("KFC")
+        click_link("Edit Review")
       end
 
       scenario 'when not signed in' do
