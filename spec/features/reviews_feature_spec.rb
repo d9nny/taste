@@ -15,7 +15,7 @@ feature 'reviewing' do
     create_restaurant("KFC")
     leave_review("KFC")
     leave_review("KFC")
-    expect(page).to have_content( "Only one review per user")
+    expect(page).to have_content( "error")
   end
 
   context 'users can only delete or edit their own reviews' do
@@ -40,9 +40,20 @@ feature 'reviewing' do
         visit '/'
         click_link("KFC")
         click_link("Edit Review")
+        fill_in "Toughts", with: "good"
+        expect(page).to have_content("good")
       end
 
       scenario 'when not signed in' do
+        sign_up("test@test.com", "password")
+        create_restaurant("KFC")
+        leave_review("KFC")
+        sign_out
+        sign_up("testing@testing.com", "password")
+        visit '/'
+        click_link("KFC")
+        click_link("Edit Review")
+        expect(page).to have_content("You can only edit your reviews")
       end
     end
   end
