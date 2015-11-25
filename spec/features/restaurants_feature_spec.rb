@@ -22,26 +22,33 @@ feature 'restaurants' do
 	end
 
 	context 'creating restaurants' do
-	  scenario 'prompts user to fill out a form, then displays the new restaurant' do
-	    visit '/restaurants'
-	    click_link 'Add a restaurant'
-	    fill_in 'Name', with: 'KFC'
-	    click_button 'Create Restaurant'
-	    expect(page).to have_content 'KFC'
-	    expect(current_path).to eq '/restaurants'
-	  end
+		
+			scenario 'not signed in' do
+				visit '/restaurants'
+				click_link 'Add a restaurant'
+				expect(page).to have_content 'Log in'
+			end
+
+		  scenario 'signed in' do
+		  	sign_up
+		    visit '/restaurants'
+		    click_link 'Add a restaurant'
+	      fill_in 'Name', with: 'KFC'
+	      click_button 'Create Restaurant'
+	      expect(page).to have_css 'h2', text: 'KFC'
+		  end
 
 	  context 'an invalid restaurant' do
-    it 'does not let you submit a name that is too short' do
-      visit '/restaurants'
-      click_link 'Add a restaurant'
-      fill_in 'Name', with: 'kf'
-      click_button 'Create Restaurant'
-      expect(page).not_to have_css 'h2', text: 'kf'
-      expect(page).to have_content 'error'
-    end
-  end
-
+	    it 'does not let you submit a name that is too short' do
+	      sign_up
+	      visit '/restaurants'
+	      click_link 'Add a restaurant'
+	      fill_in 'Name', with: 'kf'
+	      click_button 'Create Restaurant'
+	      expect(page).not_to have_css 'h2', text: 'kf'
+	      expect(page).to have_content 'error'
+	    end
+	  end
 	end
 
 	context 'viewing restaurants' do
@@ -62,6 +69,7 @@ feature 'restaurants' do
 	  before { Restaurant.create name: 'KFC' }
 
 	  scenario 'let a user edit a restaurant' do
+	  	sign_up
 	    visit '/restaurants'
 	    click_link 'Edit KFC'
 	    fill_in 'Name', with: 'Kentucky Fried Chicken'
@@ -72,7 +80,10 @@ feature 'restaurants' do
 	end
 
 	context 'deleting restaurants' do
-		before { Restaurant.create name: 'KFC' }
+		before do
+			sign_up 
+			Restaurant.create name: 'KFC' 
+		end
 
 		scenario 'removes a restaurant when a user clicks a delete link' do
 			visit '/restaurants'

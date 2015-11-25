@@ -1,5 +1,7 @@
 class RestaurantsController < ApplicationController
 
+	before_action :authenticate_user!, :except => [:index, :show]
+
 	def create
 		@restaurant = Restaurant.create(restaurant_params)
 		if @restaurant.save
