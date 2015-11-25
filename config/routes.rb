@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+
+  #OMNIAUTH
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_scope :user do
+    delete 'fb_sign_out', :to => 'devise/sessions#fb_destroy', :as => :fb_destroy_user_session
+  end
+
+  #MODEL RESOURCES
   resources :restaurants do
     resources :reviews
   end
