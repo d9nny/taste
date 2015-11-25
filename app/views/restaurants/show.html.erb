@@ -7,6 +7,7 @@
   <ul>
     <% @restaurant.reviews.each do |review| %>
       <li>
+      	<%= link_to "Edit Review",  edit_restaurant_review_path(review) %>
         <%= review.thoughts %>, <strong><%= review.rating %></strong>/5
       </li>
     <% end %>
@@ -14,3 +15,4 @@
 <% else %>
   <p>No reviews.</p>
 <% end %>
+
