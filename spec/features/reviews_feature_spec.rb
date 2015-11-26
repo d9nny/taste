@@ -69,11 +69,12 @@ feature 'reviewing' do
 
     scenario 'displays an average rating for all reviews' do
       sign_up("test@test.com", "password")
-      leave_review("KFC", "good", "4")
+      create_restaurant('KFC')
+      leave_review("KFC", "good", "3")
       sign_out
       sign_up("123@test.com", "password")
-      leave_review("KFC", "bad", "1")
-      expect(page).to have_content('Average rating: 3')
+      leave_review("KFC", "great", "5")
+      expect(page).to have_content('Average rating: ★★★★☆')
     end
   end
 end
