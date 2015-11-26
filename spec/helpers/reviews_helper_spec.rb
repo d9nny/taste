@@ -15,4 +15,10 @@ describe ReviewsHelper, :type => :helper do
     	expect(helper.star_rating(3.5)).to eq '★★★★☆'
     end
   end
+
+  context '#how_old' do
+  	it 'returns the time created' do
+  		expect(helper.how_old(3)).to eq '3 hours ago'
+  	end
+  end
 end
