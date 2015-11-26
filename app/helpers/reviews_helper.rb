@@ -7,6 +7,8 @@ module ReviewsHelper
 	end
 
 	def how_old time
-		return "#{time} hours ago"
+		return Time.now - time
 	end
+
+
 end

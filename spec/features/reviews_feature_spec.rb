@@ -74,7 +74,6 @@ feature 'reviewing' do
       sign_out
       sign_up("123@test.com", "password")
       leave_review("KFC", "great", "5")
-      save_and_open_page
       expect(page).to have_content('Average rating: ★★★★☆')
     end
   end
