@@ -29,7 +29,6 @@ class ReviewsController < ApplicationController
 
 	def update
     @review = Review.find(params[:id])
-    @restaurant = Restaurant.find(params[:restaurant_id])
     if @review.update(review_params)
       redirect_to '/restaurants'
     else
