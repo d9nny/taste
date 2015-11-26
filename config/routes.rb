@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   end
 
   #MODEL RESOURCES
-  resources :restaurants do
-    resources :reviews
+  resources :restaurants, shallow: true do
+    resources :reviews do
+      resources :endorsements
+    end
   end
   # See how all your routes lay out with "rake routes".
 
