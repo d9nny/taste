@@ -18,13 +18,14 @@ describe ReviewsHelper, :type => :helper do
 
   context '#how_old' do
     let(:time) {DateTime.new(2015, 11, 26)}
-
-    it 'dedecuts the review time from the current time' do
-      expect(helper.how_old(time)).to be_within(1.second).of (Time.now - time)
+    it 'converts the difference of time to hours' do
+      expect(helper.how_old(time)).to eq ((Time.now - time) / 3600).round
     end
-
-    it ' converts seconds to hours' do
-      expect(helper.how_old(time)).to eq ((Time.now - time) / 3600)
+  end
+  context '#hours_string' do
+    let(:time) {12}
+    it 'add the hours into a string' do
+      expect(helper.hours_string(time)).to eq "#{time} hours ago"
     end
   end
 end
