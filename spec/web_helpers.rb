@@ -18,10 +18,10 @@ def sign_out
   click_link 'Sign out'
 end
 
-def leave_review restaurant
+def leave_review (restaurant, thoughts="so so", rating='3')
 	visit '/restaurants'
   click_link "Review #{restaurant}"
-  fill_in "Thoughts", with: "so so"
-  select '3', from: 'Rating'
+  fill_in "Thoughts", with: thoughts
+  select rating, from: 'Rating'
   click_button 'Leave Review'
 end
