@@ -11,8 +11,8 @@ describe Review, type: :model do
   context "#get_time" do
     it 'get the time of review' do
       restaurant = Restaurant.create(name: 'KFC')
-      reviews = restaurant.review.create(:rating, '4')
-      expect(review.get_time).to eq reviews.created_at
+      this_review = restaurant.reviews.create(rating: 4)
+      expect(this_review.get_time).to eq (this_review.created_at)
     end
   end
 end
