@@ -77,4 +77,11 @@ feature 'reviewing' do
       expect(page).to have_content('Average rating: ★★★★☆')
     end
   end
+
+  scenario 'displays time on review ' do
+    sign_up("test@test.com", "password")
+    create_restaurant('KFC')
+    leave_review("KFC", "good", "3")
+    expect(page).to have_content("0 hours ago")
+  end
 end

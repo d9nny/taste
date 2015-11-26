@@ -6,8 +6,12 @@ module ReviewsHelper
 		'★' * rating.round + '☆' * remainder
 	end
 
-	def how_old time 	
+	def how_old time
 		((Time.now - time)/3600).round
 	end
-	
+
+	def hours_string(time)
+		"#{time} hours ago"
+	end
+
 end
