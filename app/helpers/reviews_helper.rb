@@ -5,4 +5,8 @@ module ReviewsHelper
 		remainder = (5 - rating)
 		'★' * rating.round + '☆' * remainder
 	end
+
+	def how_old time
+		return "#{time} hours ago"
+	end
 end
