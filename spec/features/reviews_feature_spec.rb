@@ -25,7 +25,7 @@ feature 'reviewing' do
         create_restaurant("KFC")
         leave_review("KFC")
         click_link("KFC")
-        click_link("Delete Review")
+        click_link("delete")
         expect(page).to have_content('Review deleted successfully')
       end
 
@@ -37,23 +37,12 @@ feature 'reviewing' do
         sign_up("testing@testing.com", "password")
         visit '/'
         click_link("KFC")
-        click_link("Delete Review")
+        click_link("delete")
         expect(page).to have_content("You aren't the review creator")
       end
     end
 
     context '#edit' do
-      scenario 'when signed in' do
-        sign_up("test@test.com", "password")
-        create_restaurant("KFC")
-        leave_review("KFC")
-        visit '/'
-        click_link("KFC")
-        click_link("Edit Review")
-        fill_in "Thoughts", with: "good"
-        expect(page).to have_content("good")
-      end
-
       scenario 'when not signed in' do
         sign_up("test@test.com", "password")
         create_restaurant("KFC")
@@ -62,7 +51,7 @@ feature 'reviewing' do
         sign_up("testing@testing.com", "password")
         visit '/'
         click_link("KFC")
-        click_link("Edit Review")
+        click_link("edit")
         expect(page).to have_content("You aren't the review creator")
       end
     end
@@ -74,7 +63,7 @@ feature 'reviewing' do
       sign_out
       sign_up("123@test.com", "password")
       leave_review("KFC", "great", "5")
-      expect(page).to have_content('Average rating: ★★★★☆')
+      expect(page).to have_content('★★★★☆')
     end
   end
 

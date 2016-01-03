@@ -1,15 +1,25 @@
-<p><%= @restaurant.name %></p>
-<p><%= @restaurant.description %></p>
+<h2><%= @restaurant.name %></h2>
+<h3><%= star_rating(@restaurant.average_rating) %> </h3>
+<div class="assets">
+<%= image_tag @restaurant.image.url(:medium) %>
+<%= @restaurant.description %>
+</div>
 
-<h3>Reviews for <%= @restaurant.name %></h3>
+<h4>Reviews</h4>
+<div id="leave-review">
+  <%= link_to  "leave review", new_restaurant_review_path(@restaurant) %>
+</div>
 
 <% if @restaurant.reviews.any? %>
   <ul>
     <% @restaurant.reviews.each do |review| %>
-      <li>
-      	<%= link_to "Edit Review",  edit_review_path(@restaurant, review) %>
-        <%= link_to "Delete Review", review_path(@restaurant, review), method: :delete %>
-        <%= review.thoughts %>, <strong><%= review.rating %></strong>/5
+      <li >
+        <%= review.thoughts %>, <strong><%= star_rating(review.rating) %></strong>
+        <%=hours_string(how_old(review.get_time)) %>
+        <b id="review-options">
+      	<%= link_to "edit",  edit_review_path(review) %>
+        <%= link_to "delete", review_path(review), method: :delete %>
+      </b>
       </li>
     <% end %>
   </ul>

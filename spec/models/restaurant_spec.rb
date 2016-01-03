@@ -17,9 +17,9 @@ describe Restaurant, type: :model do
 
 	describe '#average rating' do
 		context 'no reviews' do
-			it 'returns "N/A" when there are no reviews' do
+			it 'returns "" when there are no reviews' do
 				restaurant = Restaurant.create(name: 'The Ivy')
-				expect(restaurant.average_rating).to eq 'N/A'
+				expect(restaurant.average_rating).to eq ''
 			end
 		end
 		context '1 review' do

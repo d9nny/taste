@@ -6,7 +6,7 @@ feature 'restaurants' do
     scenario 'should display a prompt to add a restaurant' do
       visit '/'
       expect(page).to have_content 'No restaurants yet'
-      expect(page).to have_link 'Add a restaurant'
+      expect(page).to have_link 'ADD RESTAURANT'
     end
   end
 
@@ -25,7 +25,7 @@ feature 'restaurants' do
 
 		scenario 'not signed in' do
 			visit '/'
-			click_link 'Add a restaurant'
+			click_link 'ADD RESTAURANT'
 			expect(page).to have_content 'Log in'
 		end
 
@@ -64,7 +64,7 @@ feature 'restaurants' do
 	  	sign_up('test@example.com', 'testtest')
 	  	create_restaurant('KFC')
 	    visit '/'
-	    click_link 'Edit KFC'
+	    click_link 'edit'
 	    fill_in 'Name', with: 'Kentucky Fried Chicken'
 	    click_button 'Update Restaurant'
 	    expect(page).to have_content 'Kentucky Fried Chicken'
@@ -76,7 +76,7 @@ feature 'restaurants' do
 	  	create_restaurant('KFC')
 	  	sign_out
 	  	sign_up('another@another.com', 'anotheranother')
-	  	click_link 'Edit KFC'
+	  	click_link 'edit'
 	  	expect(page).to have_content "You aren't the restaurant creator"
 	  end
 
@@ -92,7 +92,7 @@ feature 'restaurants' do
 			sign_up('test@example.com', 'testtest')
 			create_restaurant('KFC');
 			visit '/restaurants'
-			click_link 'Delete KFC'
+			click_link 'delete'
 			expect(page).not_to have_content('KFC')
 			expect(page).to have_content('Restaurant deleted successfully')
 		end
@@ -103,7 +103,7 @@ feature 'restaurants' do
 			sign_out
 			sign_up('another@another.com', 'anotheranother')
 			visit '/restaurants'
-			click_link 'Delete KFC'
+			click_link 'delete'
 			expect(page).to have_content('KFC')
 			expect(page).to have_content("You aren't the restaurant creator")
 		end

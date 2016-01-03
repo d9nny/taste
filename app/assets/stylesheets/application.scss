@@ -1,0 +1,123 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+body {
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.jumbotron {
+  max-width: 800px;
+  margin: auto;
+  background-color: rgba(85, 52, 53, 0.06);
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.jumbotron a {
+	text-decoration: none;
+	  color: #F44E53;
+}
+
+nav {
+	height: 80px;
+	padding-bottom: 30px;
+}
+
+header {
+  font-size: 69px;
+  position: absolute;
+  float: left;
+  font-weight: 900;
+  letter-spacing: -3px;
+  color: #F44E53;
+  padding-left: 40px;
+}
+
+h2 {
+	padding: 20px 50px;
+	font-size: 30px;
+	font-weight: 500;	
+	margin: 0px;
+}
+
+h3 {
+	font-size: 20px;
+	padding-left: 50px;
+	margin: 0px;
+	padding-bottom: 10px;
+}
+
+h4 {
+	font-size: 25px;
+	font-weight: 100;	
+	padding: 10px 50px;
+	margin: 0px;
+}
+
+ul {
+	padding-left: 100px;
+}
+
+p {
+	padding: 10px 100px;
+}
+
+#review-options {
+	padding-left: 20px;	
+}
+
+#leave-review {
+	padding-left: 50px;	
+}
+
+#review-options a {
+	font-size: 12px;
+	font-weight: 100;
+}
+
+#nav {
+	font-size: 18px;
+  position: absolute;
+  right: 100px;
+  margin-top: 46px;
+  letter-spacing: 0px;
+ }
+
+ #nav a {
+ 	  text-decoration: none;
+    color: #F44E53;
+    padding-left: 25px;
+ }
+
+ #options {
+ 	text-align: right;
+ }
+ #options a {
+ 	padding-right: 10px; 
+ }
+
+ img {
+ 	width: 700px;
+ 	max-height: 350px;
+ }
+
+ .assets {
+	 	max-width: 700px;
+	  margin: auto;
+ }
+
+#form {
+	text-align: center;
+}
