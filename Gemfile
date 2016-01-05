@@ -33,6 +33,7 @@ gem 'paperclip'
 
 gem "twitter-bootstrap-rails"
 
+gem 'aws-sdk'
 
 
 # Use ActiveModel has_secure_password
