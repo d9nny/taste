@@ -8,14 +8,19 @@ class ReviewsController < ApplicationController
 	end
 
 	def create
-		@restaurant = Restaurant.find(params[:restaurant_id])
-		@review = @restaurant.reviews.create(review_params)
-    @review.user_id = current_user.id
-		if @review.save
-			redirect_to restaurants_path
-		else
-			render 'new'
-		end
+    if  current_user != nil
+  		@restaurant = Restaurant.find(params[:restaurant_id])
+  		@review = @restaurant.reviews.create(review_params)
+      @review.user_id = current_user.id 
+  		if @review.save
+  			redirect_to restaurants_path
+  		else
+  			render 'new'
+  		end
+    else
+      flash[:notice] = "You aren't logged in"
+      redirect_to new_user_session_path
+    end
 	end
 
 	def review_params
@@ -36,11 +41,16 @@ class ReviewsController < ApplicationController
     end
   end
 
-  def review_creator?
+    def review_creator?
     @review = Review.find(params[:id])
-    unless current_user.id == @review.user_id
-      flash[:notice] = "You aren't the review creator"
-      redirect_to restaurants_path
+    if  current_user != nil
+      unless @review.user_id == current_user.id 
+        flash[:notice] = "You aren't the restaurant creator"
+        redirect_to restaurants_path
+      end
+    else
+      flash[:notice] = "You aren't the logged in"
+      redirect_to new_user_session_path
     end
   end
 

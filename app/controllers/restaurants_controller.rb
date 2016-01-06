@@ -4,13 +4,18 @@ class RestaurantsController < ApplicationController
 	before_action :authenticate_user!, :except => [:index, :show]
 
 	def create
-		@restaurant = Restaurant.create(restaurant_params)
-    @restaurant.user_id = current_user.id
-		if @restaurant.save
-			redirect_to restaurants_path
+		if  current_user != nil
+			@restaurant = Restaurant.create(restaurant_params)
+	    @restaurant.user_id = current_user.id
+			if @restaurant.save
+				redirect_to restaurants_path
+			else
+				render 'new'
+			end
 		else
-			render 'new'
-		end
+      flash[:notice] = "You aren't logged in"
+      redirect_to new_user_session_path
+    end
 	end
 
 	def index
@@ -27,10 +32,15 @@ class RestaurantsController < ApplicationController
 
   def restaurant_creator?
     @restaurant = Restaurant.find(params[:id])
-    unless current_user.id == @restaurant.user_id
-      flash[:notice] = "You aren't the restaurant creator"
-      redirect_to restaurants_path
-    end
+    if  current_user != nil
+	    unless @restaurant.user_id == current_user.id 
+	      flash[:notice] = "You aren't the restaurant creator"
+	      redirect_to restaurants_path
+	    end
+	  else
+	  	flash[:notice] = "You aren't the logged in"
+	    redirect_to new_user_session_path
+	  end
   end
 
 	def show
