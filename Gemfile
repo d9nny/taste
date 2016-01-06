@@ -29,11 +29,12 @@ gem 'devise'
 # omniauth
 gem 'omniauth-facebook'
 
-gem 'paperclip'
+
 
 gem "twitter-bootstrap-rails"
 
-gem 'aws-sdk'
+gem 'paperclip'
+gem 'aws-sdk', '< 2.0'
 
 
 # Use ActiveModel has_secure_password
@@ -48,6 +49,7 @@ gem 'aws-sdk'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'dotenv-rails'
 end
 
 group :development do
